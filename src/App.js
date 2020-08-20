@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState, useEffect} from 'react';
 import './App.css';
+import axios from 'axios'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component{
+
+
+    constructor(props, context) {
+        super(props, context);
+        this.state={
+            time:0
+        }
+        this.timeChange = this.timeChange.bind(this)
+    }
+
+    componentDidMount() {
+        this.timeChange()
+    }
+    timeChange(){
+        axios.get('/time')
+            .then(data=>this.setState({time:data.data.time}))
+    }
+    render() {
+    return (
+        <div>
+            <p>The current time is {this.state.time}.</p>
+        </div>
+    );
+    }
 }
 
 export default App;
