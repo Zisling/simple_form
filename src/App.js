@@ -1,6 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import './App.css';
 import axios from 'axios'
+import LoginPage from './LoginPage'
+import SignUp from "./SignUp";
 
 class App extends React.Component{
 
@@ -8,22 +10,40 @@ class App extends React.Component{
     constructor(props, context) {
         super(props, context);
         this.state={
-            time:0
+            time:0,
+            isLogin:false,
+            openSignUp:false
         }
-        this.timeChange = this.timeChange.bind(this)
+        this.handleLogIn =this.handleLogIn.bind(this);
+        this.onClick =this.onClick.bind(this);
+
     }
 
-    componentDidMount() {
-        this.timeChange()
+    onClick(event){
+        const {name} = event.target;
+        this.setState((prevState) =>{
+            return ({[name]:!prevState[name]})});
     }
-    timeChange(){
-        axios.get('/time')
-            .then(data=>this.setState({time:data.data.time}))
+
+    handleLogIn(event , email , password , remember){
+        axios.post('users/login' , {email:email, password:password, remember:remember})
+            .then(res =>{
+                console.log(res.data['login'])
+                this.setState({isLogin:res.data['login']})
+            }).catch(e => console.log(e))
+        event.preventDefault();
     }
     render() {
     return (
         <div>
-            <p>The current time is {this.state.time}.</p>
+            {(!this.state.isLogin) ?
+                <button name={'openSignUp'} onClick={this.onClick}>{!this.state.openSignUp?'go to Signup'
+                :"go to login"}</button> :""}
+               <br/>
+            {!this.state.isLogin ? !this.state.openSignUp?
+                <LoginPage isLogin={this.state.isLogin} handleLogIn={this.handleLogIn}/>:
+                <SignUp isLogin={this.state.isLogin} handleLogIn={this.handleLogIn}/>
+                : 'you are logged in'}
         </div>
     );
     }
