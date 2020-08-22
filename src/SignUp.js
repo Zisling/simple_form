@@ -35,7 +35,7 @@ class SignUp extends React.Component{
         axios.post('/users/signup' ,data)
             .then(
         res => {
-            return res.data.json['signup'] ? this.state.handleLogIn(event, this.state.email, this.state.password , true)
+            return res.data.json['confirm'] ? this.state.handleLogIn(event, this.state.email, this.state.password , true)
             : console.log('something went wrong in Signup.js')}
         ).catch(error=>console.log(error))
 
@@ -46,13 +46,13 @@ class SignUp extends React.Component{
     render() {
         return (<div>
             <form onSubmit={this.onSubmit}>
-                <textarea placeholder={'first_name'} name={'first_name'} onChange={this.handleChange}/>
+                <input type={'text'} placeholder={'first_name'} name={'first_name'} onChange={this.handleChange}/>
                 <br/>
-                <textarea placeholder={'last_name'} name={'last_name'} onChange={this.handleChange}/>
+                <input type={'text'} placeholder={'last_name'} name={'last_name'} onChange={this.handleChange}/>
                 <br/>
-                <textarea placeholder={'email'} name={'email'} onChange={this.handleChange}/>
+                <input type={'text'} placeholder={'email'} name={'email'} onChange={this.handleChange}/>
                 <br/>
-                <textarea placeholder={'password'} name={'password'} onChange={this.handleChange}/>
+                <input type={'text'} placeholder={'password'} name={'password'} onChange={this.handleChange}/>
                 <br/>
                 <button>signup</button>
             </form>

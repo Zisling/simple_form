@@ -29,9 +29,9 @@ class LoginPage extends React.Component{
     render() {
         return (<div>
             <form onSubmit={this.onSubmit}>
-                <textarea placeholder={'email'} name={'email'} onChange={this.handleChange}/>
+                <input type={'text'} placeholder={'email'} name={'email'} onChange={this.handleChange}/>
                 <br/>
-                <textarea placeholder={'password'} name={'password'} onChange={this.handleChange}/>
+                <input type={'text'} placeholder={'password'} name={'password'} onChange={this.handleChange}/>
                 <br/>
                 <button>login</button>
             </form>
